@@ -48,7 +48,7 @@
             this.m_labelJoint1Val = new System.Windows.Forms.Label();
             this.m_labelJoint6Name = new System.Windows.Forms.Label();
             this.tabPage2 = new System.Windows.Forms.TabPage();
-            this.label12 = new System.Windows.Forms.Label();
+            this.m_labelCVal = new System.Windows.Forms.Label();
             this.m_labelBVal = new System.Windows.Forms.Label();
             this.m_labelAVal = new System.Windows.Forms.Label();
             this.m_labelZVal = new System.Windows.Forms.Label();
@@ -87,6 +87,7 @@
             this.m_labelR50000 = new System.Windows.Forms.Label();
             this.m_timerReadRbit = new System.Windows.Forms.Timer(this.components);
             this.m_buttonStart = new System.Windows.Forms.Button();
+            this.m_timerSendPose = new System.Windows.Forms.Timer(this.components);
             this.m_groupBoxInfo.SuspendLayout();
             this.m_tabControlPosition.SuspendLayout();
             this.tabPage1.SuspendLayout();
@@ -132,7 +133,7 @@
             this.m_groupBoxInfo.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.m_groupBoxInfo.Controls.Add(this.m_tabControlPosition);
             this.m_groupBoxInfo.Font = new System.Drawing.Font("新細明體", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.m_groupBoxInfo.Location = new System.Drawing.Point(776, 68);
+            this.m_groupBoxInfo.Location = new System.Drawing.Point(782, 68);
             this.m_groupBoxInfo.Name = "m_groupBoxInfo";
             this.m_groupBoxInfo.RightToLeft = System.Windows.Forms.RightToLeft.No;
             this.m_groupBoxInfo.Size = new System.Drawing.Size(266, 288);
@@ -144,7 +145,7 @@
             // 
             this.m_tabControlPosition.Controls.Add(this.tabPage1);
             this.m_tabControlPosition.Controls.Add(this.tabPage2);
-            this.m_tabControlPosition.Location = new System.Drawing.Point(6, 16);
+            this.m_tabControlPosition.Location = new System.Drawing.Point(6, 15);
             this.m_tabControlPosition.Name = "m_tabControlPosition";
             this.m_tabControlPosition.SelectedIndex = 0;
             this.m_tabControlPosition.Size = new System.Drawing.Size(254, 265);
@@ -297,7 +298,7 @@
             // 
             // tabPage2
             // 
-            this.tabPage2.Controls.Add(this.label12);
+            this.tabPage2.Controls.Add(this.m_labelCVal);
             this.tabPage2.Controls.Add(this.m_labelBVal);
             this.tabPage2.Controls.Add(this.m_labelAVal);
             this.tabPage2.Controls.Add(this.m_labelZVal);
@@ -309,7 +310,7 @@
             this.tabPage2.Controls.Add(this.m_labelZ);
             this.tabPage2.Controls.Add(this.m_labelY);
             this.tabPage2.Controls.Add(this.m_labelX);
-            this.tabPage2.Font = new System.Drawing.Font("新細明體", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.tabPage2.Font = new System.Drawing.Font("新細明體", 24F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
             this.tabPage2.Location = new System.Drawing.Point(4, 26);
             this.tabPage2.Name = "tabPage2";
             this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
@@ -318,113 +319,125 @@
             this.tabPage2.Text = "World";
             this.tabPage2.UseVisualStyleBackColor = true;
             // 
-            // label12
+            // m_labelCVal
             // 
-            this.label12.AutoSize = true;
-            this.label12.Location = new System.Drawing.Point(158, 203);
-            this.label12.Name = "label12";
-            this.label12.Size = new System.Drawing.Size(62, 19);
-            this.label12.TabIndex = 11;
-            this.label12.Text = "label12";
+            this.m_labelCVal.AutoSize = true;
+            this.m_labelCVal.Font = new System.Drawing.Font("新細明體", 24F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.m_labelCVal.Location = new System.Drawing.Point(118, 195);
+            this.m_labelCVal.Name = "m_labelCVal";
+            this.m_labelCVal.Size = new System.Drawing.Size(30, 32);
+            this.m_labelCVal.TabIndex = 11;
+            this.m_labelCVal.Text = "0";
             // 
             // m_labelBVal
             // 
             this.m_labelBVal.AutoSize = true;
-            this.m_labelBVal.Location = new System.Drawing.Point(158, 173);
+            this.m_labelBVal.Font = new System.Drawing.Font("新細明體", 24F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.m_labelBVal.Location = new System.Drawing.Point(118, 156);
             this.m_labelBVal.Name = "m_labelBVal";
-            this.m_labelBVal.Size = new System.Drawing.Size(62, 19);
+            this.m_labelBVal.Size = new System.Drawing.Size(30, 32);
             this.m_labelBVal.TabIndex = 10;
-            this.m_labelBVal.Text = "label11";
+            this.m_labelBVal.Text = "0";
             // 
             // m_labelAVal
             // 
             this.m_labelAVal.AutoSize = true;
-            this.m_labelAVal.Location = new System.Drawing.Point(158, 141);
+            this.m_labelAVal.Font = new System.Drawing.Font("新細明體", 24F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.m_labelAVal.Location = new System.Drawing.Point(118, 118);
             this.m_labelAVal.Name = "m_labelAVal";
-            this.m_labelAVal.Size = new System.Drawing.Size(62, 19);
+            this.m_labelAVal.Size = new System.Drawing.Size(30, 32);
             this.m_labelAVal.TabIndex = 9;
-            this.m_labelAVal.Text = "label10";
+            this.m_labelAVal.Text = "0";
             // 
             // m_labelZVal
             // 
             this.m_labelZVal.AutoSize = true;
-            this.m_labelZVal.Location = new System.Drawing.Point(166, 109);
+            this.m_labelZVal.Font = new System.Drawing.Font("新細明體", 24F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.m_labelZVal.Location = new System.Drawing.Point(118, 81);
             this.m_labelZVal.Name = "m_labelZVal";
-            this.m_labelZVal.Size = new System.Drawing.Size(53, 19);
+            this.m_labelZVal.Size = new System.Drawing.Size(30, 32);
             this.m_labelZVal.TabIndex = 8;
-            this.m_labelZVal.Text = "label9";
+            this.m_labelZVal.Text = "0";
             // 
             // m_labelYVal
             // 
             this.m_labelYVal.AutoSize = true;
-            this.m_labelYVal.Location = new System.Drawing.Point(166, 65);
+            this.m_labelYVal.Font = new System.Drawing.Font("新細明體", 24F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.m_labelYVal.Location = new System.Drawing.Point(118, 44);
             this.m_labelYVal.Name = "m_labelYVal";
-            this.m_labelYVal.Size = new System.Drawing.Size(53, 19);
+            this.m_labelYVal.Size = new System.Drawing.Size(30, 32);
             this.m_labelYVal.TabIndex = 7;
-            this.m_labelYVal.Text = "label8";
+            this.m_labelYVal.Text = "0";
             // 
             // m_labelXVal
             // 
             this.m_labelXVal.AutoSize = true;
-            this.m_labelXVal.Location = new System.Drawing.Point(166, 7);
+            this.m_labelXVal.Font = new System.Drawing.Font("新細明體", 24F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.m_labelXVal.Location = new System.Drawing.Point(118, 7);
             this.m_labelXVal.Name = "m_labelXVal";
-            this.m_labelXVal.Size = new System.Drawing.Size(53, 19);
+            this.m_labelXVal.Size = new System.Drawing.Size(30, 32);
             this.m_labelXVal.TabIndex = 6;
-            this.m_labelXVal.Text = "label7";
+            this.m_labelXVal.Text = "0";
             // 
             // m_labelC
             // 
             this.m_labelC.AutoSize = true;
-            this.m_labelC.Location = new System.Drawing.Point(10, 203);
+            this.m_labelC.Font = new System.Drawing.Font("新細明體", 24F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.m_labelC.Location = new System.Drawing.Point(7, 195);
             this.m_labelC.Name = "m_labelC";
-            this.m_labelC.Size = new System.Drawing.Size(53, 19);
+            this.m_labelC.Size = new System.Drawing.Size(43, 32);
             this.m_labelC.TabIndex = 5;
-            this.m_labelC.Text = "label6";
+            this.m_labelC.Text = "C:";
             // 
             // m_labelB
             // 
             this.m_labelB.AutoSize = true;
-            this.m_labelB.Location = new System.Drawing.Point(10, 173);
+            this.m_labelB.Font = new System.Drawing.Font("新細明體", 24F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.m_labelB.Location = new System.Drawing.Point(7, 156);
             this.m_labelB.Name = "m_labelB";
-            this.m_labelB.Size = new System.Drawing.Size(53, 19);
+            this.m_labelB.Size = new System.Drawing.Size(43, 32);
             this.m_labelB.TabIndex = 4;
-            this.m_labelB.Text = "label5";
+            this.m_labelB.Text = "B:";
             // 
             // m_labelA
             // 
             this.m_labelA.AutoSize = true;
-            this.m_labelA.Location = new System.Drawing.Point(10, 141);
+            this.m_labelA.Font = new System.Drawing.Font("新細明體", 24F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.m_labelA.Location = new System.Drawing.Point(7, 118);
             this.m_labelA.Name = "m_labelA";
-            this.m_labelA.Size = new System.Drawing.Size(53, 19);
+            this.m_labelA.Size = new System.Drawing.Size(45, 32);
             this.m_labelA.TabIndex = 3;
-            this.m_labelA.Text = "label4";
+            this.m_labelA.Text = "A:";
             // 
             // m_labelZ
             // 
             this.m_labelZ.AutoSize = true;
-            this.m_labelZ.Location = new System.Drawing.Point(10, 109);
+            this.m_labelZ.Font = new System.Drawing.Font("新細明體", 24F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.m_labelZ.Location = new System.Drawing.Point(7, 81);
             this.m_labelZ.Name = "m_labelZ";
-            this.m_labelZ.Size = new System.Drawing.Size(53, 19);
+            this.m_labelZ.Size = new System.Drawing.Size(41, 32);
             this.m_labelZ.TabIndex = 2;
-            this.m_labelZ.Text = "label3";
+            this.m_labelZ.Text = "Z:";
             // 
             // m_labelY
             // 
             this.m_labelY.AutoSize = true;
-            this.m_labelY.Location = new System.Drawing.Point(10, 65);
+            this.m_labelY.Font = new System.Drawing.Font("新細明體", 24F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.m_labelY.Location = new System.Drawing.Point(7, 44);
             this.m_labelY.Name = "m_labelY";
-            this.m_labelY.Size = new System.Drawing.Size(53, 19);
+            this.m_labelY.Size = new System.Drawing.Size(45, 32);
             this.m_labelY.TabIndex = 1;
-            this.m_labelY.Text = "label2";
+            this.m_labelY.Text = "Y:";
             // 
             // m_labelX
             // 
             this.m_labelX.AutoSize = true;
+            this.m_labelX.Font = new System.Drawing.Font("新細明體", 24F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
             this.m_labelX.Location = new System.Drawing.Point(7, 7);
             this.m_labelX.Name = "m_labelX";
-            this.m_labelX.Size = new System.Drawing.Size(53, 19);
+            this.m_labelX.Size = new System.Drawing.Size(45, 32);
             this.m_labelX.TabIndex = 0;
-            this.m_labelX.Text = "label1";
+            this.m_labelX.Text = "X:";
             // 
             // m_groupBoxIP
             // 
@@ -432,7 +445,7 @@
             this.m_groupBoxIP.Controls.Add(this.m_label_IP);
             this.m_groupBoxIP.Controls.Add(this.m_textBox_IP);
             this.m_groupBoxIP.Controls.Add(this.m_button_Connect);
-            this.m_groupBoxIP.Location = new System.Drawing.Point(776, 2);
+            this.m_groupBoxIP.Location = new System.Drawing.Point(782, 2);
             this.m_groupBoxIP.Name = "m_groupBoxIP";
             this.m_groupBoxIP.Size = new System.Drawing.Size(266, 60);
             this.m_groupBoxIP.TabIndex = 4;
@@ -443,7 +456,7 @@
             this.m_listBoxLog.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.m_listBoxLog.FormattingEnabled = true;
             this.m_listBoxLog.ItemHeight = 12;
-            this.m_listBoxLog.Location = new System.Drawing.Point(12, 362);
+            this.m_listBoxLog.Location = new System.Drawing.Point(18, 362);
             this.m_listBoxLog.Name = "m_listBoxLog";
             this.m_listBoxLog.Size = new System.Drawing.Size(758, 172);
             this.m_listBoxLog.TabIndex = 5;
@@ -464,7 +477,7 @@
             this.m_groupBoxRWbit.Controls.Add(this.m_labelBitMode);
             this.m_groupBoxRWbit.Controls.Add(this.m_comboBoxTypeBit);
             this.m_groupBoxRWbit.Controls.Add(this.m_comboBoxModebit);
-            this.m_groupBoxRWbit.Location = new System.Drawing.Point(776, 355);
+            this.m_groupBoxRWbit.Location = new System.Drawing.Point(782, 355);
             this.m_groupBoxRWbit.Name = "m_groupBoxRWbit";
             this.m_groupBoxRWbit.Size = new System.Drawing.Size(266, 184);
             this.m_groupBoxRWbit.TabIndex = 6;
@@ -550,6 +563,8 @@
             // 
             // groupBox1
             // 
+            this.groupBox1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.groupBox1.Controls.Add(this.m_labelR50010Val);
             this.groupBox1.Controls.Add(this.m_labelR50004Val);
             this.groupBox1.Controls.Add(this.m_labelR50003Val);
@@ -563,9 +578,9 @@
             this.groupBox1.Controls.Add(this.m_labelR50001);
             this.groupBox1.Controls.Add(this.m_labelR50000);
             this.groupBox1.Font = new System.Drawing.Font("新細明體", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.groupBox1.Location = new System.Drawing.Point(470, 83);
+            this.groupBox1.Location = new System.Drawing.Point(482, 83);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(300, 273);
+            this.groupBox1.Size = new System.Drawing.Size(288, 273);
             this.groupBox1.TabIndex = 7;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "R Bit Table";
@@ -694,12 +709,16 @@
             this.m_buttonStart.UseVisualStyleBackColor = true;
             this.m_buttonStart.Click += new System.EventHandler(this.m_buttonStart_Click);
             // 
+            // m_timerSendPose
+            // 
+            this.m_timerSendPose.Tick += new System.EventHandler(this.m_timerSendPose_Tick);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoSize = true;
-            this.ClientSize = new System.Drawing.Size(1054, 551);
+            this.ClientSize = new System.Drawing.Size(1066, 551);
             this.Controls.Add(this.m_buttonStart);
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.m_groupBoxRWbit);
@@ -758,7 +777,7 @@
         private System.Windows.Forms.TabControl m_tabControlPosition;
         private System.Windows.Forms.TabPage tabPage1;
         private System.Windows.Forms.TabPage tabPage2;
-        private System.Windows.Forms.Label label12;
+        private System.Windows.Forms.Label m_labelCVal;
         private System.Windows.Forms.Label m_labelBVal;
         private System.Windows.Forms.Label m_labelAVal;
         private System.Windows.Forms.Label m_labelZVal;
@@ -785,6 +804,7 @@
         private System.Windows.Forms.Label m_labelR50000Val;
         private System.Windows.Forms.Timer m_timerReadRbit;
         private System.Windows.Forms.Button m_buttonStart;
+        private System.Windows.Forms.Timer m_timerSendPose;
     }
 }
 

@@ -11,3 +11,16 @@ C:\Users\GP62-7RE\documents\visual studio 2015\Projects\SyntecRemote\SyntecRemot
 C:\Users\GP62-7RE\documents\visual studio 2015\Projects\SyntecRemote\SyntecRemote\bin\Debug\MMICommon32.dll
 C:\Users\GP62-7RE\documents\visual studio 2015\Projects\SyntecRemote\SyntecRemote\bin\Debug\nunit.framework.dll
 C:\Users\GP62-7RE\documents\visual studio 2015\Projects\SyntecRemote\SyntecRemote\obj\Debug\SyntecRemote.Form1.resources
+D:\VisualStudioProject\SyntecRemote\SyntecRemote\bin\Debug\SyntecRemote.exe.config
+D:\VisualStudioProject\SyntecRemote\SyntecRemote\obj\Debug\SyntecRemote.exe
+D:\VisualStudioProject\SyntecRemote\SyntecRemote\obj\Debug\SyntecRemote.pdb
+D:\VisualStudioProject\SyntecRemote\SyntecRemote\bin\Debug\SyntecRemote.exe
+D:\VisualStudioProject\SyntecRemote\SyntecRemote\bin\Debug\SyntecRemote.pdb
+D:\VisualStudioProject\SyntecRemote\SyntecRemote\bin\Debug\Syntec.RemoteObj.dll
+D:\VisualStudioProject\SyntecRemote\SyntecRemote\bin\Debug\Syntec.OpenCNC.dll
+D:\VisualStudioProject\SyntecRemote\SyntecRemote\bin\Debug\MMICommon32.dll
+D:\VisualStudioProject\SyntecRemote\SyntecRemote\bin\Debug\nunit.framework.dll
+D:\VisualStudioProject\SyntecRemote\SyntecRemote\obj\Debug\SyntecRemote.csprojResolveAssemblyReference.cache
+D:\VisualStudioProject\SyntecRemote\SyntecRemote\obj\Debug\SyntecRemote.Form1.resources
+D:\VisualStudioProject\SyntecRemote\SyntecRemote\obj\Debug\SyntecRemote.Properties.Resources.resources
+D:\VisualStudioProject\SyntecRemote\SyntecRemote\obj\Debug\SyntecRemote.csproj.GenerateResource.Cache

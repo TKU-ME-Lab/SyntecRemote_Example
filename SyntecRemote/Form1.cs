@@ -8,9 +8,11 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Net.Sockets;
+using System.Runtime.Serialization.Formatters.Binary;
 
 
 using Syntec.Remote;
+using System.Text.RegularExpressions;
 
 public enum BitType
 {
@@ -27,8 +29,6 @@ public enum BitMode
 
 namespace SyntecRemote
 {
-    
-
 
     public partial class Form1 : Form
     {
@@ -39,7 +39,12 @@ namespace SyntecRemote
 
         static private System.Net.IPAddress m_hostAddress = System.Net.IPAddress.Parse("127.0.0.1");
         static TcpListener m_TcpServer = new TcpListener(m_hostAddress, 4568);
-        //static TcpClient m_Tcpclient = null;
+        static TcpClient m_TcpClient;
+        static NetworkStream m_NetStream;
+
+        private bool m_NewPose = false;
+        private String[] m_Pose = { };
+        private int m_StartBit = 0;
 
         static private System.Threading.Thread m_threadTcp;
 
@@ -50,7 +55,7 @@ namespace SyntecRemote
 
         private void Form1_Load(object sender, EventArgs e)
         {
-            m_textBox_IP.Text += "192.168.1.10";
+            m_textBox_IP.Text += "10.0.0.10";
 
             m_comboBoxModebit.Items.Add("Read");
             m_comboBoxModebit.Items.Add("Write");
@@ -61,7 +66,7 @@ namespace SyntecRemote
 
             m_threadTcp = new System.Threading.Thread(new System.Threading.ThreadStart(socketCB));
 
-
+            m_threadTcp.Start();
             m_TcpServer.Start();
         }
 
@@ -92,6 +97,9 @@ namespace SyntecRemote
                     m_timerReadRbit.Enabled = true;
                     m_timerReadRbit.Start();
 
+                    m_timerSendPose.Enabled = true;
+                    m_timerSendPose.Start();
+
                     State = ConnectionState.Connecting;
                 }
             }
@@ -108,15 +116,26 @@ namespace SyntecRemote
             
         }
 
-        private void ShowLog(string msg)
+        private void ShowLog(String msg)
         {
             m_listBoxLog.Items.Add(msg);
         }
 
         private void m_timerReadPos_Tick(object sender, EventArgs e)
         {
-            int Rstart = 721;
-            int Rend = 726;
+            int Rstart;
+            int Rend;
+            if (m_tabControlPosition.SelectedIndex == 0)
+            {
+                Rstart = 741;
+                Rend = 746;
+            }
+            else
+            {
+                Rstart = 721;
+                Rend = 726;
+            }
+            
             int[] data;
 
             short result = CNC.READ_plc_register(Rstart, Rend,out data);
@@ -127,19 +146,25 @@ namespace SyntecRemote
             }
             else
             {
-                //float[] fdata = { };
-
-                //for(int index = 0; index < 6; index++)
-                //{
-                //    fdata[index] = (float)data[index];
-                //}
-
-                m_labelJoint1Val.Text = string.Concat(data[0]);
-                m_labelJoint2Val.Text = string.Concat(data[1]);
-                m_labelJoint3Val.Text = string.Concat(data[2]);
-                m_labelJoint4Val.Text = string.Concat(data[3]);
-                m_labelJoint5Val.Text = string.Concat(data[4]);
-                m_labelJoint6Val.Text = string.Concat(data[5]);
+                if (m_tabControlPosition.SelectedIndex == 0)
+                {
+                    m_labelJoint1Val.Text = String.Concat((double)data[0] / 1000);
+                    m_labelJoint2Val.Text = String.Concat((double)data[1] / 1000);
+                    m_labelJoint3Val.Text = String.Concat((double)data[2] / 1000);
+                    m_labelJoint4Val.Text = String.Concat((double)data[3] / 1000);
+                    m_labelJoint5Val.Text = String.Concat((double)data[4] / 1000);
+                    m_labelJoint6Val.Text = String.Concat((double)data[5] / 1000);
+                }
+                else
+                {
+                    m_labelXVal.Text = String.Concat((double)data[0] / 1000);
+                    m_labelYVal.Text = String.Concat((double)data[1] / 1000);
+                    m_labelZVal.Text = String.Concat((double)data[2] / 1000);
+                    m_labelAVal.Text = String.Concat((double)data[3] / 1000);
+                    m_labelBVal.Text = String.Concat((double)data[4] / 1000);
+                    m_labelCVal.Text = String.Concat((double)data[5] / 1000);
+                }
+                
             }
         }
 
@@ -250,13 +275,13 @@ namespace SyntecRemote
                         switch (m_bittype)
                         {
                             case BitType.O:
-                                ShowLog("Fail to read " + string.Concat(no) + " O bit");
+                                ShowLog("Fail to read " + String.Concat(no) + " O bit");
                                 break;
                             case BitType.I:
-                                ShowLog("Fail to read " + string.Concat(no) + " I bit");
+                                ShowLog("Fail to read " + String.Concat(no) + " I bit");
                                 break;
                             case BitType.R:
-                                ShowLog("Fail to read " + string.Concat(no) + " Register");
+                                ShowLog("Fail to read " + String.Concat(no) + " Register");
                                 break;
                             default:
                                 break;
@@ -266,11 +291,11 @@ namespace SyntecRemote
                     {
                         if (m_bittype == BitType.R)
                         {
-                            m_textBoxBitVal.Text = string.Concat(valR);
+                            m_textBoxBitVal.Text = String.Concat(valR);
                         }
                         else
                         {
-                            m_textBoxBitVal.Text = string.Concat(val);
+                            m_textBoxBitVal.Text = String.Concat(val);
                         }
                     }
                 }
@@ -292,11 +317,11 @@ namespace SyntecRemote
             }
             else
             {
-                m_labelR50000Val.Text = string.Concat(data[0]);
-                m_labelR50001Val.Text = string.Concat(data[1]);
-                m_labelR50002Val.Text = string.Concat(data[2]);
-                m_labelR50003Val.Text = string.Concat(data[3]);
-                m_labelR50004Val.Text = string.Concat(data[4]);
+                m_labelR50000Val.Text = String.Concat((double)data[0] / 1000);
+                m_labelR50001Val.Text = String.Concat((double)data[1] / 1000);
+                m_labelR50002Val.Text = String.Concat((double)data[2] / 1000);
+                m_labelR50003Val.Text = String.Concat((double)data[3] / 1000);
+                m_labelR50004Val.Text = String.Concat((double)data[4] / 1000);
             }
 
             result = CNC.READ_plc_register(50010, 50010, out data);
@@ -307,45 +332,127 @@ namespace SyntecRemote
             }
             else
             {
-               m_labelR50010Val.Text = string.Concat(data[0]);
+               m_labelR50010Val.Text = String.Concat(data[0]);
+                m_StartBit = data[0];
             }
         }
 
         private void m_buttonStart_Click(object sender, EventArgs e)
         {
-            int[] data = { 990000, 0, 599000, 0, 0, 0 };
-            int R50000 = 50000;
-            int R50004 = 50004;
-
-
-            short result = CNC.WRITE_plc_register(R50000, R50004, data);
-
-            if (result != (short)SyntecRemoteCNC.ErrorCode.NormalTermination)
+            if (m_NetStream.CanWrite)
             {
-                ShowLog("Fail Write Pose");
+                string msg = "Start";
+                byte[] data = Encoding.ASCII.GetBytes(msg);
+                m_NetStream.Write(data, 0, data.Length);
+               // m_NetStream.
             }
-            else
-            {
-                int RStart = 50010;
-                int[] data_Start = { 3 };
+            // 1041453, -38229, 469472, 0, 90000 
+            // offset X: +90000, Z: -130000
 
-                result = CNC.WRITE_plc_register(RStart, RStart, data_Start);
+            //int[] data = { 1068516, -107113, 458469, 27994, 90000 };
 
-                if (result != (short)SyntecRemoteCNC.ErrorCode.NormalTermination)
-                {
-                    ShowLog("Fail to Start");
-                }
-                else
-                {
-                    ShowLog("Start Drill!!");
-                }
-            }
+            //int R50000 = 50000;
+            //int R50004 = 50004;
+
+            //short result = CNC.WRITE_plc_register(R50000, R50004, data);
+
+            //if (result != (short)SyntecRemoteCNC.ErrorCode.NormalTermination)
+            //{
+            //    ShowLog("Fail Write Pose");
+            //}
+            //else
+            //{
+            //    int RStart = 50010;
+            //    int[] data_Start = { 1 };
+
+            //    result = CNC.WRITE_plc_register(RStart, RStart, data_Start);
+
+            //    if (result != (short)SyntecRemoteCNC.ErrorCode.NormalTermination)
+            //    {
+            //        ShowLog("Fail to Start");
+            //    }
+            //    else
+            //    {
+            //        ShowLog("Start Drill!!");
+            //    }
+            //}
         }
 
         private void socketCB()
         {
-            
-            //
+            int bufferSize = 0;
+            while (true)
+            {
+                if (m_TcpClient == null || m_NetStream == null)
+                {
+                    m_TcpClient = m_TcpServer.AcceptTcpClient();
+                    bufferSize = m_TcpClient.ReceiveBufferSize;
+                    m_NetStream = m_TcpClient.GetStream();
+                }
+                else
+                {
+                    if (m_NetStream.CanRead)
+                    {
+                        byte[] receivePackage = new byte[bufferSize];
+
+                        int Result = m_NetStream.Read(receivePackage, 0, bufferSize);
+
+                        String str = Encoding.ASCII.GetString(receivePackage, 0, bufferSize);
+                        str = str.Trim('\0');
+
+                        String pattern = @"\[";
+
+                        m_Pose = Regex.Split(str, pattern);
+                        m_NewPose = true;
+                    }
+                }
+            }    
+        }
+
+        private void m_timerSendPose_Tick(object sender, EventArgs e)
+        {
+            if (m_NewPose && m_StartBit == 0)
+            {
+                ShowLog("X: " + m_Pose[0]);
+                ShowLog("Y: " + m_Pose[1]);
+                ShowLog("Z: " + m_Pose[2]);
+                ShowLog("A: " + m_Pose[3]);
+
+                int X = int.Parse(m_Pose[0]);
+                int Y = int.Parse(m_Pose[1]);
+                int Z = int.Parse(m_Pose[2]);
+                int A = int.Parse(m_Pose[3]);
+
+                int[] data = { X, Y, Z, A, 90000 };
+
+                int R50000 = 50000;
+                int R50004 = 50004;
+
+                short result = CNC.WRITE_plc_register(R50000, R50004, data);
+
+                if (result != (short)SyntecRemoteCNC.ErrorCode.NormalTermination)
+                {
+                    ShowLog("Fail Write Pose");
+                }
+                else
+                {
+                    int RStart = 50010;
+                    int[] data_Start = { 1 };
+
+                    result = CNC.WRITE_plc_register(RStart, RStart, data_Start);
+
+                    if (result != (short)SyntecRemoteCNC.ErrorCode.NormalTermination)
+                    {
+                        ShowLog("Fail to Start");
+                    }
+                    else
+                    {
+                        ShowLog("Start Drill!!");
+                    }
+                }
+
+                m_NewPose = false;
+            }
         }
     }
 }
